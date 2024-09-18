@@ -45,6 +45,15 @@
           "revision": "2e09be8af614401bc9f87d40093ec19ce56ccaf2",
           "version": "0.1.3"
         }
+      },
+      {
+        "package": "TokenUI",
+        "repositoryURL": "https://github.com/hootsuite/token-ui.git",
+        "state": {
+          "branch": "master",
+          "revision": "8dbad378a86544a26557ab6fbc757fa20b28e17d",
+          "version": null
+        }
       }
     ]
   },

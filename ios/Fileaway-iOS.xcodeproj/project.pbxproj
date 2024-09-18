@@ -18,6 +18,7 @@
 		D8648712292D323A007CD688 /* RulePickerRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8648711292D323A007CD688 /* RulePickerRow.swift */; };
 		D86AA556291DB7E00078B2DA /* FilePicker in Frameworks */ = {isa = PBXBuildFile; productRef = D86AA555291DB7E00078B2DA /* FilePicker */; };
 		D88B353D28B61247000C8910 /* FileawayCore in Frameworks */ = {isa = PBXBuildFile; productRef = D88B353C28B61247000C8910 /* FileawayCore */; };
+		D898D1D4293515EF007C17E5 /* TokenUI in Frameworks */ = {isa = PBXBuildFile; productRef = D898D1D3293515EF007C17E5 /* TokenUI */; };
 		D8A871D22916D56400B2932A /* ComponentItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A871D12916D56400B2932A /* ComponentItem.swift */; };
 		D8A871D72917F82C00B2932A /* Interact in Frameworks */ = {isa = PBXBuildFile; productRef = D8A871D62917F82C00B2932A /* Interact */; };
 		D8C15DBA291A498F002DB14D /* FileawayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C15DB9291A498F002DB14D /* FileawayApp.swift */; };
@@ -101,6 +102,7 @@
 				D88B353D28B61247000C8910 /* FileawayCore in Frameworks */,
 				D8FB857F2916D2430024F885 /* Diligence in Frameworks */,
 				D8A871D72917F82C00B2932A /* Interact in Frameworks */,
+				D898D1D4293515EF007C17E5 /* TokenUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +296,7 @@
 				D8FB857E2916D2430024F885 /* Diligence */,
 				D8A871D62917F82C00B2932A /* Interact */,
 				D86AA555291DB7E00078B2DA /* FilePicker */,
+				D898D1D3293515EF007C17E5 /* TokenUI */,
 			);
 			productName = Fileaway;
 			productReference = D8CCB8022143672700AC445F /* Fileaway.app */;
@@ -372,6 +375,9 @@
 				Base,
 			);
 			mainGroup = D8CCB7F92143672700AC445F;
+			packageReferences = (
+				D898D1D2293515EF007C17E5 /* XCRemoteSwiftPackageReference "token-ui" */,
+			);
 			productRefGroup = D8CCB8032143672700AC445F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -780,6 +786,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D898D1D2293515EF007C17E5 /* XCRemoteSwiftPackageReference "token-ui" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/hootsuite/token-ui.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		D86AA555291DB7E00078B2DA /* FilePicker */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -788,6 +805,11 @@
 		D88B353C28B61247000C8910 /* FileawayCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = FileawayCore;
+		};
+		D898D1D3293515EF007C17E5 /* TokenUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D898D1D2293515EF007C17E5 /* XCRemoteSwiftPackageReference "token-ui" */;
+			productName = TokenUI;
 		};
 		D8A871D62917F82C00B2932A /* Interact */ = {
 			isa = XCSwiftPackageProductDependency;

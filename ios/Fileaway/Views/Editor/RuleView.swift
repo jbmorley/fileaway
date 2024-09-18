@@ -23,6 +23,110 @@ import Foundation
 import SwiftUI
 
 import FileawayCore
+import TokenUI
+
+struct TokenField: UIViewControllerRepresentable {
+
+    @Binding var components: [ComponentModel]
+
+    class Coordinator: TokenTextViewControllerDelegate, TokenTextViewControllerInputDelegate {
+
+        func tokenTextViewInputTextDidChange(_ sender: TokenUI.TokenTextViewController, inputText: String) {
+        }
+
+        func tokenTextViewInputTextWasConfirmed(_ sender: TokenUI.TokenTextViewController) {
+            guard let text = sender.text else {
+                return
+            }
+            print(text)
+        }
+
+        func tokenTextViewInputTextWasCanceled(_ sender: TokenUI.TokenTextViewController, reason: TokenUI.TokenTextInputCancellationReason) {
+
+        }
+
+        func tokenTextViewDidChange(_ sender: TokenUI.TokenTextViewController) {
+            guard let text = sender.text else {
+                return
+            }
+
+            // Convert the tokens back into destinations.
+            var offset = 0
+            for token in sender.tokenList {
+                if token.range.location > offset {
+                    let startIndex = text.index(text.startIndex, offsetBy: offset)
+                    let endIndex = text.index(text.startIndex, offsetBy: token.range.location)
+                    print(String(text[startIndex..<endIndex]))
+                }
+                let startIndex = text.index(text.startIndex, offsetBy: token.range.location)
+                let endIndex = text.index(text.startIndex, offsetBy: token.range.location + token.range.length)
+                print(String(text[startIndex..<endIndex]))
+                offset = token.range.location + token.range.length
+            }
+            if offset < text.count {
+                let startIndex = text.index(text.startIndex, offsetBy: offset)
+                print(String(text[startIndex...]))
+            }
+
+        }
+
+        func tokenTextViewShouldChangeTextInRange(_ sender: TokenUI.TokenTextViewController,
+                                                  range: NSRange,
+                                                  replacementText text: String) -> Bool {
+            return true
+        }
+
+        func tokenTextViewDidSelectToken(_ sender: TokenUI.TokenTextViewController,
+                                         tokenRef: TokenUI.TokenReference,
+                                         fromRect rect: CGRect) {
+
+        }
+
+        func tokenTextViewDidDeleteToken(_ sender: TokenUI.TokenTextViewController, tokenRef: TokenUI.TokenReference) {
+
+        }
+
+        func tokenTextViewTextStorageIsUpdatingFormatting(_ sender: TokenUI.TokenTextViewController,
+                                                          text: String, searchRange: NSRange) -> [(attributes: [NSAttributedString.Key : Any], forRange: NSRange)] {
+            return []
+        }
+
+        func tokenTextViewBackgroundColourForTokenRef(_ sender: TokenUI.TokenTextViewController, tokenRef: TokenUI.TokenReference) -> UIColor? {
+            return .systemCyan
+        }
+
+        func tokenTextViewShouldCancelEditingAtInsert(_ sender: TokenUI.TokenTextViewController,
+                                                      newText: String,
+                                                      inputText: String) -> Bool {
+            return true
+        }
+
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    func makeUIViewController(context: Context) -> TokenTextViewController {
+        let tokenTextViewController = TokenTextViewController()
+        tokenTextViewController.delegate = context.coordinator
+        tokenTextViewController.inputDelegate = context.coordinator
+
+        for component in components {
+            if component.type == .variable {
+                tokenTextViewController.addToken(tokenTextViewController.text.count, text: component.value)
+            } else {
+                tokenTextViewController.appendText(component.value)
+            }
+        }
+
+        return tokenTextViewController
+    }
+
+    func updateUIViewController(_ tokenTextViewController: TokenTextViewController, context: Context) {
+        tokenTextViewController.delegate = context.coordinator
+    }
+}
 
 struct RuleView: View {
 
@@ -55,6 +159,11 @@ struct RuleView: View {
 
                 Section {
                     EditText("Rule", text: $editingRuleModel.name)
+                }
+
+                Section("Filename") {
+                    TokenField(components: $editingRuleModel.destination)
+                        .frame(height: 100)
                 }
 
                 Section {
